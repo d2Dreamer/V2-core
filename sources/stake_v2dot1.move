@@ -2,7 +2,7 @@
 
 */
 
-module baptswap_v2dot1::stake_v2dot1 {
+module yuzu_v2dot1::stake_v2dot1 {
 
     use std::signer;
 
@@ -11,19 +11,19 @@ module baptswap_v2dot1::stake_v2dot1 {
 
     use aptos_framework::coin;
 
-    use baptswap::math;
-    use baptswap::u256;
+    use yuzu::math;
+    use yuzu::u256;
 
-    use bapt_framework::deployer;
+    // use bapt_framework::deployer;
 
-    use baptswap_v2dot1::admin_v2dot1;
-    use baptswap_v2dot1 ::constants_v2dot1;
-    use baptswap_v2dot1 ::errors_v2dot1;
-    use baptswap_v2dot1 ::fee_on_transfer_v2dot1;
-    use baptswap_v2dot1 ::utils_v2dot1;
+    use yuzu_v2dot1::admin_v2dot1;
+    use yuzu_v2dot1 ::constants_v2dot1;
+    use yuzu_v2dot1 ::errors_v2dot1;
+    use yuzu_v2dot1 ::fee_on_transfer_v2dot1;
+    use yuzu_v2dot1 ::utils_v2dot1;
 
-    friend baptswap_v2dot1 ::router_v2dot1;
-    friend baptswap_v2dot1 ::swap_v2dot1;
+    friend yuzu_v2dot1 ::router_v2dot1;
+    friend yuzu_v2dot1 ::swap_v2dot1;
 
     // Stores the rewards pool info for token pairs
     struct TokenPairRewardsPool<phantom X, phantom Y> has key {
@@ -389,33 +389,30 @@ module baptswap_v2dot1::stake_v2dot1 {
     ): (u128, u128) {
         if (reward_x == 0 && reward_y == 0) return (last_magnified_dividends_per_share_x, last_magnified_dividends_per_share_y);
 
-        let x_token_per_share_u256 = u256::from_u64(0u64);
-        let y_token_per_share_u256 = u256::from_u64(0u64);
-
-        if (reward_x > 0) {
+        let x_token_per_share_u256 = if (reward_x > 0) {
             // acc_token_per_share = acc_token_per_share + (reward * precision_factor) / total_stake;
-            x_token_per_share_u256 = u256::add(
+            u256::add(
                 u256::from_u128(last_magnified_dividends_per_share_x),
                 u256::div(
                     u256::mul(u256::from_u64(reward_x), u256::from_u128(precision_factor)),
                     u256::from_u64(total_staked_token)
                 )
-            );
+            )
         } else {
-            x_token_per_share_u256 = u256::from_u128(last_magnified_dividends_per_share_x);
+            u256::from_u128(last_magnified_dividends_per_share_x)
         };
 
-        if (reward_y > 0) {
+        let y_token_per_share_u256 = if (reward_y > 0) {
             // acc_token_per_share = acc_token_per_share + (reward * precision_factor) / total_stake;
-            y_token_per_share_u256 = u256::add(
+            u256::add(
                 u256::from_u128(last_magnified_dividends_per_share_y),
                 u256::div(
                     u256::mul(u256::from_u64(reward_y), u256::from_u128(precision_factor)),
                     u256::from_u64(total_staked_token)
                 )
-            );
+            )
         } else {
-            y_token_per_share_u256 = u256::from_u128(last_magnified_dividends_per_share_y);
+            u256::from_u128(last_magnified_dividends_per_share_y)
         };
 
         (u256::as_u128(x_token_per_share_u256), u256::as_u128(y_token_per_share_u256))

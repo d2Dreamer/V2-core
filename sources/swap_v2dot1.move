@@ -1,6 +1,6 @@
 /*
     Description: 
-        This module implements the core logic of the BaptswapV2. 
+        This module implements the core logic of the yuzuV2. 
         It allows users to create token pairs, add liquidity, remove liquidity, swap tokens, and stake tokens. 
         It also allows token owners to set individual token fees and withdraw team fee.
         There are two fee types:
@@ -8,7 +8,7 @@
         - Individual token fees: liquidity fee + rewards fee + team fee
 */
 
-module baptswap_v2dot1::swap_v2dot1 {
+module yuzu_v2dot1::swap_v2dot1 {
 
     use std::signer;
     use std::option::{Self, Option};
@@ -23,20 +23,20 @@ module baptswap_v2dot1::swap_v2dot1 {
     use aptos_framework::account;
     use aptos_framework::code;
 
-    use baptswap::math;
-    use baptswap::u256;
+    use yuzu::math;
+    use yuzu::u256;
 
-    use baptswap_v2dot1::admin_v2dot1;
-    use baptswap_v2dot1::constants_v2dot1;
-    use baptswap_v2dot1::errors_v2dot1;
-    use baptswap_v2dot1::fee_on_transfer_v2dot1::{Self, FeeOnTransferInfo};
-    use baptswap_v2dot1::stake_v2dot1;
-    use baptswap_v2dot1::swap_utils_v2dot1;
-    use baptswap_v2dot1::utils_v2dot1;
+    use yuzu_v2dot1::admin_v2dot1;
+    use yuzu_v2dot1::constants_v2dot1;
+    use yuzu_v2dot1::errors_v2dot1;
+    use yuzu_v2dot1::fee_on_transfer_v2dot1::{Self, FeeOnTransferInfo};
+    use yuzu_v2dot1::stake_v2dot1;
+    use yuzu_v2dot1::swap_utils_v2dot1;
+    use yuzu_v2dot1::utils_v2dot1;
 
-    use bapt_framework::deployer;
+    use yuzu_framework::deployer;
 
-    friend baptswap_v2dot1::router_v2dot1;
+    friend yuzu_v2dot1::router_v2dot1;
 
     // -------
     // Structs
@@ -61,7 +61,7 @@ module baptswap_v2dot1::swap_v2dot1 {
         rewards_fee: u128,
         // The team fee = team fee X + team fee Y
         team_fee: u128,       
-        // The BaptSwap treasury fee
+        // The yuzu treasury fee
         treasury_fee: u128,
         // T0 token balance
         balance_x: Coin<X>,
@@ -363,7 +363,7 @@ module baptswap_v2dot1::swap_v2dot1 {
         let sender_addr = signer::address_of(sender);
         let resource_signer = admin_v2dot1::get_resource_signer();
 
-        let lp_name: string::String = string::utf8(b"BaptswapV2.1-");
+        let lp_name: string::String = string::utf8(b"yuzuV2.1-");
         let name_x = coin::symbol<X>();
         let name_y = coin::symbol<Y>();
         string::append(&mut lp_name, name_x);
@@ -371,7 +371,7 @@ module baptswap_v2dot1::swap_v2dot1 {
         string::append(&mut lp_name, name_y);
         string::append_utf8(&mut lp_name, b"-LP");
         if (string::length(&lp_name) > errors_v2dot1::max_coin_name_length()) {
-            lp_name = string::utf8(b"BaptSwap LPs");
+            lp_name = string::utf8(b"yuzu LPs");
         };
 
         // now we init the LP token

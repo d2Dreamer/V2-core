@@ -1,16 +1,15 @@
 [package]
 name = "CoinDeployer"
-version = "1.0.0"
+version = "1.0.1"
 authors = []
 
 [addresses]
-bapt_framework = "d0ec361a55b327913690b2851cec05f1e017ec6c647689cae051644f667a1ddb"
-
+yuzu_framework = "2cdf1f17ef5a45e959140abc428ba14aa6d19a1923b2f440a699c04f1930da29"
 [dev-addresses]
 
 [dependencies.AptosFramework]
 git = "https://github.com/aptos-labs/aptos-core.git"
-rev = "mainnet"
+rev = "main"
 subdir = "aptos-move/framework/aptos-framework"
 
 [dev-dependencies]

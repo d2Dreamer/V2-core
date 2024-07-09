@@ -1,9 +1,9 @@
 /// Uniswap v2 like token swap program
-module baptswap_v2dot1::swap_utils_v2dot1 {
+module yuzu_v2dot1::swap_utils_v2dot1 {
     use std::string;
     use aptos_std::type_info;
     use aptos_std::comparator;
-    use baptswap_v2dot1::errors_v2dot1;
+    use yuzu_v2dot1::errors_v2dot1;
 
 
     const EQUAL: u8 = 0;

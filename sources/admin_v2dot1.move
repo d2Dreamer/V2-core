@@ -2,26 +2,25 @@
     This module is responsible for managing the admin, treasury addresses, and the dex fees.
 */
 
-module baptswap_v2dot1::admin_v2dot1 {
+module yuzu_v2dot1::admin_v2dot1 {
 
     use aptos_framework::event;
 
-    // use aptos_std::debug;
     use aptos_std::smart_table::{Self, SmartTable};
     use aptos_std::type_info;
     
     use aptos_framework::account;
     use aptos_framework::resource_account;
 
-    use baptswap_v2dot1::constants_v2dot1;
-    use baptswap_v2dot1::errors_v2dot1;
+    use yuzu_v2dot1::constants_v2dot1;
+    use yuzu_v2dot1::errors_v2dot1;
 
     use std::signer;
 
-    friend baptswap_v2dot1::fee_on_transfer_v2dot1;
-    friend baptswap_v2dot1::router_v2dot1;
-    friend baptswap_v2dot1::stake_v2dot1;
-    friend baptswap_v2dot1::swap_v2dot1;
+    friend yuzu_v2dot1::fee_on_transfer_v2dot1;
+    friend yuzu_v2dot1::router_v2dot1;
+    friend yuzu_v2dot1::stake_v2dot1;
+    friend yuzu_v2dot1::swap_v2dot1;
 
     // -------
     // Structs
@@ -132,7 +131,7 @@ module baptswap_v2dot1::admin_v2dot1 {
     // --------------------
 
     fun init_module(sender: &signer) {
-        let signer_cap = resource_account::retrieve_resource_account_cap(sender, @dev_2);
+        let signer_cap = resource_account::retrieve_resource_account_cap(sender, @dev_v2dot1);
         let resource_signer = account::create_signer_with_capability(&signer_cap);
         // initialize swap info
         move_to(&resource_signer, AdminInfo {
@@ -460,7 +459,7 @@ module baptswap_v2dot1::admin_v2dot1 {
     }
 
     #[test_only]
-    friend baptswap_v2dot1::swap_v2dot1_test;
+    friend yuzu_v2dot1::swap_v2dot1_test;
 
     #[test_only]
     public fun init_test(sender: &signer) {

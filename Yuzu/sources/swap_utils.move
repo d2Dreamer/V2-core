@@ -1,5 +1,5 @@
 /// Uniswap v2 like token swap program
-module baptswap::swap_utils {
+module yuzu::swap_utils {
     use std::string;
     use aptos_std::type_info;
     use aptos_std::comparator;

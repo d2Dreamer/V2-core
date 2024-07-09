@@ -1,8 +1,8 @@
-module baptswap::router {
-    use baptswap::swap;
+module yuzu::router {
+    use yuzu::swap;
     use std::signer;
     use aptos_framework::coin;
-    use baptswap::swap_utils;
+    use yuzu::swap_utils;
 
     //
     // Errors.

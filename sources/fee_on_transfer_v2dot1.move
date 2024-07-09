@@ -2,7 +2,7 @@
 
 */
 
-module baptswap_v2dot1::fee_on_transfer_v2dot1 {
+module yuzu_v2dot1::fee_on_transfer_v2dot1 {
 
     use aptos_framework::code;
     use aptos_framework::event;
@@ -10,17 +10,17 @@ module baptswap_v2dot1::fee_on_transfer_v2dot1 {
     // use aptos_std::debug;
     use aptos_std::type_info;
 
-    use bapt_framework::deployer;
+    use yuzu_framework::deployer;
 
-    use baptswap_v2dot1::admin_v2dot1;
-    use baptswap_v2dot1::constants_v2dot1;
-    use baptswap_v2dot1::errors_v2dot1;
+    use yuzu_v2dot1::admin_v2dot1;
+    use yuzu_v2dot1::constants_v2dot1;
+    use yuzu_v2dot1::errors_v2dot1;
 
     use std::signer;
     use std::string::{String};
 
-    friend baptswap_v2dot1::router_v2dot1;
-    friend baptswap_v2dot1::swap_v2dot1;
+    friend yuzu_v2dot1::router_v2dot1;
+    friend yuzu_v2dot1::swap_v2dot1;
 
     // -------
     // Structs

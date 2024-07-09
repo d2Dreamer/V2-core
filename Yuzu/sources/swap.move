@@ -1,5 +1,5 @@
 /// Uniswap v2 like token swap program
-module baptswap::swap {
+module yuzu::swap {
     use std::signer;
     use std::option;
     use std::string;
@@ -12,15 +12,15 @@ module baptswap::swap {
     use aptos_framework::resource_account;
     use aptos_framework::code;
 
-    use baptswap::math;
-    use baptswap::swap_utils;
-    use baptswap::u256;
+    use yuzu::math;
+    use yuzu::swap_utils;
+    use yuzu::u256;
 
-    friend baptswap::router;
+    friend yuzu::router;
 
     const ZERO_ACCOUNT: address = @zero;
     const DEFAULT_ADMIN: address = @default_admin;
-    const RESOURCE_ACCOUNT: address = @baptswap;
+    const RESOURCE_ACCOUNT: address = @yuzu;
     const DEV: address = @dev;
     const MINIMUM_LIQUIDITY: u128 = 1000;
     const MAX_COIN_NAME_LENGTH: u64 = 32;
@@ -74,7 +74,7 @@ module baptswap::swap {
         k_last: u128,
         /// The variable liquidity fee granted to providers
         liquidity_fee: u128,
-        /// The BaptSwap treasury fee
+        /// The yuzu treasury fee
         treasury_fee: u128,
         /// The team fee
         team_fee: u128,
@@ -122,6 +122,8 @@ module baptswap::swap {
         staked_tokens: coin::Coin<StakeToken>,
         reward_debt_x: u128,
         reward_debt_y: u128,
+        withdrawn_x: u64,
+        withdrawn_y: u64,
     }
 
     struct SwapInfo has key {
@@ -258,33 +260,30 @@ module baptswap::swap {
     ): (u128, u128) {
         if (reward_x == 0 && reward_y == 0) return (last_magnified_dividends_per_share_x, last_magnified_dividends_per_share_y);
 
-        let x_token_per_share_u256 = u256::from_u64(0u64);
-        let y_token_per_share_u256 = u256::from_u64(0u64);
-
-        if (reward_x > 0) {
+        let x_token_per_share_u256 = if (reward_x > 0) {
             // acc_token_per_share = acc_token_per_share + (reward * precision_factor) / total_stake;
-            x_token_per_share_u256 = u256::add(
+            u256::add(
                 u256::from_u128(last_magnified_dividends_per_share_x),
                 u256::div(
                     u256::mul(u256::from_u64(reward_x), u256::from_u128(precision_factor)),
                     u256::from_u64(total_staked_token)
                 )
-            );
+            )
         } else {
-            x_token_per_share_u256 = u256::from_u128(last_magnified_dividends_per_share_x);
+            u256::from_u128(last_magnified_dividends_per_share_x)
         };
 
-        if (reward_y > 0) {
+        let y_token_per_share_u256 = if (reward_y > 0) {
             // acc_token_per_share = acc_token_per_share + (reward * precision_factor) / total_stake;
-            y_token_per_share_u256 = u256::add(
+            u256::add(
                 u256::from_u128(last_magnified_dividends_per_share_y),
                 u256::div(
                     u256::mul(u256::from_u64(reward_y), u256::from_u128(precision_factor)),
                     u256::from_u64(total_staked_token)
                 )
-            );
+            )
         } else {
-            y_token_per_share_u256 = u256::from_u128(last_magnified_dividends_per_share_y);
+            u256::from_u128(last_magnified_dividends_per_share_y)
         };
 
         (u256::as_u128(x_token_per_share_u256), u256::as_u128(y_token_per_share_u256))
@@ -331,6 +330,8 @@ module baptswap::swap {
                     staked_tokens: coin::zero<X>(),
                     reward_debt_x: 0,
                     reward_debt_y: 0,
+                    withdrawn_x: 0,
+                    withdrawn_y: 0,
                 })
             };
 
@@ -371,6 +372,8 @@ module baptswap::swap {
                     staked_tokens: coin::zero<Y>(),
                     reward_debt_x: 0,
                     reward_debt_y: 0,
+                    withdrawn_x: 0,
+                    withdrawn_y: 0,
                 })
             };
 
@@ -571,7 +574,7 @@ module baptswap::swap {
         let swap_info = borrow_global_mut<SwapInfo>(RESOURCE_ACCOUNT);
         let resource_signer = account::create_signer_with_capability(&swap_info.signer_cap);
 
-        let lp_name: string::String = string::utf8(b"BaptSwap-");
+        let lp_name: string::String = string::utf8(b"yuzu-");
         let name_x = coin::symbol<X>();
         let name_y = coin::symbol<Y>();
         string::append(&mut lp_name, name_x);
@@ -579,7 +582,7 @@ module baptswap::swap {
         string::append(&mut lp_name, name_y);
         string::append_utf8(&mut lp_name, b"-LP");
         if (string::length(&lp_name) > MAX_COIN_NAME_LENGTH) {
-            lp_name = string::utf8(b"BaptSwap LPs");
+            lp_name = string::utf8(b"yuzu LPs");
         };
 
         // now we init the LP token

@@ -1,7 +1,7 @@
 #[test_only]
 module alice::alice_coins {
     use std::string;
-    use bapt_framework::deployer;
+    use yuzu_framework::deployer;
     use aptos_std::math64::pow;
     use aptos_framework::managed_coin;
 
@@ -22,7 +22,7 @@ module alice::alice_coins {
 #[test_only]
 module bob::bob_coins {
     use std::string;
-    use bapt_framework::deployer;
+    use yuzu_framework::deployer;
     use aptos_std::math64::pow;
     use aptos_framework::coin;
 

@@ -2,16 +2,16 @@
 
 */
 
-module baptswap_v2dot1::errors_v2dot1 {
+module yuzu_v2dot1::errors_v2dot1 {
 
     use std::error;
 
-    friend baptswap_v2dot1::admin_v2dot1;
-    friend baptswap_v2dot1::fee_on_transfer_v2dot1;
-    friend baptswap_v2dot1::router_v2dot1;
-    friend baptswap_v2dot1::swap_v2dot1;
-    friend baptswap_v2dot1::stake_v2dot1;
-    friend baptswap_v2dot1::swap_utils_v2dot1;    
+    friend yuzu_v2dot1::admin_v2dot1;
+    friend yuzu_v2dot1::fee_on_transfer_v2dot1;
+    friend yuzu_v2dot1::router_v2dot1;
+    friend yuzu_v2dot1::swap_v2dot1;
+    friend yuzu_v2dot1::stake_v2dot1;
+    friend yuzu_v2dot1::swap_utils_v2dot1;    
 
     /// Only admin can call this function
     const ERROR_ONLY_ADMIN: u64 = 0;

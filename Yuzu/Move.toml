@@ -1,0 +1,15 @@
+[package]
+name = "Yuzu"
+version = "0.1.0"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "main"
+subdir = "aptos-move/framework/aptos-framework"
+
+[addresses]
+yuzu = "0x7eb9837fbc675289dd7a5d1d632d510a44813f763726236fac551d0c792a59df"
+dev = "0x2cdf1f17ef5a45e959140abc428ba14aa6d19a1923b2f440a699c04f1930da29"
+zero = "0000000000000000000000000000000000000000000000000000000000000000"
+default_admin = "efb4da60354e5b2f419ee71fb277677a7c1b8cb1a3d4bbf0455d561ebf199eef"
+test_coin = "0x16"
