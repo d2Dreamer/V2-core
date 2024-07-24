@@ -5,8 +5,8 @@ version = "2.1.0"
 authors = []
 
 [addresses]
-yuzu_v2dot1 = "0x417eea4b120840efd5bf76aadd70f49e9a0b798fadfeef7925f1e1e748c031e"
-dev_v2dot1 = "0x2cdf1f17ef5a45e959140abc428ba14aa6d19a1923b2f440a699c04f1930da29"
+yuzu_v2dot1 = "0x8500561eb670cddc41625be38c882b2ab06b211db68eed5d9c331483db97b01d"
+dev_v2dot1 = "d66d7422ebdd68dc4299d2601793aa9b3db6a047ffdeb6f03d132b3fea52cc96"
 
 admin = "91a65207f3a8ac7447da7efe3fd640ef6eaf8f68fcf07f6bec489b89fbef2cd6"
 treasury = "91a65207f3a8ac7447da7efe3fd640ef6eaf8f68fcf07f6bec489b89fbef2cd6"
