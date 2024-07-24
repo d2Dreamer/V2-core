@@ -4,7 +4,7 @@ version = "1.0.1"
 authors = []
 
 [addresses]
-yuzu_framework = "d66d7422ebdd68dc4299d2601793aa9b3db6a047ffdeb6f03d132b3fea52cc96"
+yuzu_framework = "0xfab1d67f58e405701128ab5155ddcc7fabae8fdd2eba9afa93eda9864f34b872"
 [dev-addresses]
 
 [dependencies.AptosFramework]
